@@ -6,7 +6,7 @@ const Flights = () => {
     const roundTripInput = document.getElementById("round_trip");
     const goingInput = document.getElementById("going");
     const returnTripInput = document.getElementById("return_date");
-    returnTripInput.setAttribute('class', 'block')
+    returnTripInput.setAttribute('class', 'inline')
 
     if (id === "going") {
       roundTripInput.checked = false;
@@ -14,7 +14,7 @@ const Flights = () => {
     } else if (id === "round_trip") {
       goingInput.checked = false;
       if(returnTripInput.classList.value !== 'block'){
-        returnTripInput.setAttribute('class', 'block')
+        returnTripInput.setAttribute('class', 'inline')
       }
     }
   };
