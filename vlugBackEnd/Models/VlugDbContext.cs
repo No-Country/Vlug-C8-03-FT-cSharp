@@ -10,7 +10,8 @@ public partial class VlugDbContext : DbContext
     {
     }
 
-    public VlugDbContext(DbContextOptions<VlugDbContext> options) : base(options)
+    public VlugDbContext(DbContextOptions<VlugDbContext> options)
+        : base(options)
     {
     }
 
@@ -26,30 +27,34 @@ public partial class VlugDbContext : DbContext
 
     public virtual DbSet<FlightsTicket> FlightsTickets { get; set; }
 
-    public virtual DbSet<Profile> Profiles { get; set; }
-
     public virtual DbSet<User> Users { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=bdevelopment.net;Database=VlugDB;User=vluguser;Password=dd87c26e-d154-4c8c-b91a-74e25a388122;TrustServerCertificate=True;");
+    public virtual DbSet<UsersProfile> UsersProfiles { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<AirPortCityCountryCode>(entity =>
         {
             entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.City).HasMaxLength(50);
-            entity.Property(e => e.Code).HasMaxLength(50);
-            entity.Property(e => e.Country).HasMaxLength(50);
+            entity.Property(e => e.City)
+                .IsRequired()
+                .HasMaxLength(50);
+            entity.Property(e => e.Code)
+                .IsRequired()
+                .HasMaxLength(50);
+            entity.Property(e => e.Country)
+                .IsRequired()
+                .HasMaxLength(50);
         });
 
         modelBuilder.Entity<AirsCompany>(entity =>
         {
             entity.HasKey(e => e.IdAirCompany);
 
-            entity.Property(e => e.NameComp).HasMaxLength(50);
-            entity.Property(e => e.Status).HasMaxLength(20);
+            entity.Property(e => e.LogoUrl).IsRequired();
+            entity.Property(e => e.NameComp)
+                .IsRequired()
+                .HasMaxLength(50);
         });
 
         modelBuilder.Entity<Booking>(entity =>
@@ -58,7 +63,9 @@ public partial class VlugDbContext : DbContext
 
             entity.Property(e => e.DateBooking).HasColumnType("date");
             entity.Property(e => e.MountReward).HasColumnType("numeric(18, 2)");
-            entity.Property(e => e.Status).HasMaxLength(20);
+            entity.Property(e => e.Status)
+                .IsRequired()
+                .HasMaxLength(20);
 
             entity.HasOne(d => d.IdFlightTicketNavigation).WithMany(p => p.Bookings)
                 .HasForeignKey(d => d.IdFlightTicket)
@@ -75,8 +82,12 @@ public partial class VlugDbContext : DbContext
         {
             entity.HasKey(e => e.IdContact);
 
-            entity.Property(e => e.Email).HasMaxLength(50);
-            entity.Property(e => e.FullName).HasMaxLength(50);
+            entity.Property(e => e.Email)
+                .IsRequired()
+                .HasMaxLength(50);
+            entity.Property(e => e.FullName)
+                .IsRequired()
+                .HasMaxLength(50);
 
             entity.HasOne(d => d.IdUserNavigation).WithMany(p => p.Contacts)
                 .HasForeignKey(d => d.IdUser)
@@ -88,8 +99,12 @@ public partial class VlugDbContext : DbContext
         {
             entity.HasKey(e => e.IdFlight);
 
-            entity.Property(e => e.Code).HasMaxLength(20);
-            entity.Property(e => e.Shipflight).HasMaxLength(20);
+            entity.Property(e => e.Code)
+                .IsRequired()
+                .HasMaxLength(20);
+            entity.Property(e => e.Shipflight)
+                .IsRequired()
+                .HasMaxLength(20);
 
             entity.HasOne(d => d.IdAirCompanyNavigation).WithMany(p => p.Flights)
                 .HasForeignKey(d => d.IdAirCompany)
@@ -101,17 +116,33 @@ public partial class VlugDbContext : DbContext
         {
             entity.HasKey(e => e.IdFlightTicket);
 
-            entity.Property(e => e.Arrival).HasMaxLength(50);
+            entity.Property(e => e.Arrival)
+                .IsRequired()
+                .HasMaxLength(50);
             entity.Property(e => e.BoardingTime).HasPrecision(0);
-            entity.Property(e => e.Class).HasMaxLength(50);
+            entity.Property(e => e.Class)
+                .IsRequired()
+                .HasMaxLength(50);
             entity.Property(e => e.DateFligh).HasColumnType("date");
-            entity.Property(e => e.Departure).HasMaxLength(50);
-            entity.Property(e => e.Gate).HasMaxLength(20);
+            entity.Property(e => e.Departure)
+                .IsRequired()
+                .HasMaxLength(50);
+            entity.Property(e => e.Gate)
+                .IsRequired()
+                .HasMaxLength(20);
             entity.Property(e => e.Mount).HasColumnType("numeric(18, 2)");
-            entity.Property(e => e.PassengerName).HasMaxLength(50);
-            entity.Property(e => e.Seat).HasMaxLength(20);
-            entity.Property(e => e.Status).HasMaxLength(20);
-            entity.Property(e => e.TicketCode).HasMaxLength(50);
+            entity.Property(e => e.PassengerName)
+                .IsRequired()
+                .HasMaxLength(50);
+            entity.Property(e => e.Seat)
+                .IsRequired()
+                .HasMaxLength(20);
+            entity.Property(e => e.Status)
+                .IsRequired()
+                .HasMaxLength(20);
+            entity.Property(e => e.TicketCode)
+                .IsRequired()
+                .HasMaxLength(50);
 
             entity.HasOne(d => d.IdFlightNavigation).WithMany(p => p.FlightsTickets)
                 .HasForeignKey(d => d.IdFlight)
@@ -119,25 +150,36 @@ public partial class VlugDbContext : DbContext
                 .HasConstraintName("FK_FlightsTickets_Flights");
         });
 
-        modelBuilder.Entity<Profile>(entity =>
-        {
-            entity.HasKey(e => e.IdProfile);
-
-            entity.Property(e => e.NameRole).HasMaxLength(50);
-        });
-
         modelBuilder.Entity<User>(entity =>
         {
             entity.HasKey(e => e.IdUser);
 
-            entity.Property(e => e.Email).HasMaxLength(50);
-            entity.Property(e => e.FullName).HasMaxLength(50);
-            entity.Property(e => e.Status).HasMaxLength(20);
+            entity.Property(e => e.Email)
+                .IsRequired()
+                .HasMaxLength(50);
+            entity.Property(e => e.FullName)
+                .IsRequired()
+                .HasMaxLength(50);
+            entity.Property(e => e.ImgUrl).IsRequired();
+            entity.Property(e => e.Password).IsRequired();
+            entity.Property(e => e.Salt).IsRequired();
+            entity.Property(e => e.Status)
+                .IsRequired()
+                .HasMaxLength(20);
 
             entity.HasOne(d => d.IdProfileNavigation).WithMany(p => p.Users)
                 .HasForeignKey(d => d.IdProfile)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Users_Profiles");
+        });
+
+        modelBuilder.Entity<UsersProfile>(entity =>
+        {
+            entity.HasKey(e => e.IdUseProfile).HasName("PK_Profiles");
+
+            entity.Property(e => e.NameRole)
+                .IsRequired()
+                .HasMaxLength(50);
         });
 
         OnModelCreatingPartial(modelBuilder);

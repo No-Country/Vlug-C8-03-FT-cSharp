@@ -7,17 +7,17 @@ public partial class User
 {
     public int IdUser { get; set; }
 
-    public string Email { get; set; } = null!;
+    public string Email { get; set; }
 
-    public string Password { get; set; } = null!;
+    public string Password { get; set; }
 
-    public string Salt { get; set; } = null!;
+    public string Salt { get; set; }
 
-    public string FullName { get; set; } = null!;
+    public string FullName { get; set; }
 
-    public string ImgUrl { get; set; } = null!;
+    public string ImgUrl { get; set; }
 
-    public string Status { get; set; } = null!;
+    public string Status { get; set; }
 
     public int IdProfile { get; set; }
 
@@ -25,5 +25,5 @@ public partial class User
 
     public virtual ICollection<Contact> Contacts { get; } = new List<Contact>();
 
-    public virtual Profile IdProfileNavigation { get; set; } = null!;
+    public virtual UsersProfile IdProfileNavigation { get; set; }
 }

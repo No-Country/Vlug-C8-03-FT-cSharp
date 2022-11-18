@@ -283,3 +283,4 @@ E:\GitHUB\vlug\vlugBackEnd\obj\Release\net6.0\refint\vlugBackEnd.dll
 E:\GitHUB\vlug\vlugBackEnd\obj\Release\net6.0\vlugBackEnd.pdb
 E:\GitHUB\vlug\vlugBackEnd\obj\Release\net6.0\vlugBackEnd.genruntimeconfig.cache
 E:\GitHUB\vlug\vlugBackEnd\obj\Release\net6.0\ref\vlugBackEnd.dll
+E:\GitHUB\vlug\vlugBackEnd\bin\Release\net6.0\vlugBackEnd.staticwebassets.runtime.json

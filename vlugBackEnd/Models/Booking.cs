@@ -15,9 +15,9 @@ public partial class Booking
 
     public decimal MountReward { get; set; }
 
-    public string Status { get; set; } = null!;
+    public string Status { get; set; }
 
-    public virtual FlightsTicket IdFlightTicketNavigation { get; set; } = null!;
+    public virtual FlightsTicket IdFlightTicketNavigation { get; set; }
 
-    public virtual User IdUserNavigation { get; set; } = null!;
+    public virtual User IdUserNavigation { get; set; }
 }

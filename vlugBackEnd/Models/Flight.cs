@@ -9,11 +9,11 @@ public partial class Flight
 
     public int IdAirCompany { get; set; }
 
-    public string Shipflight { get; set; } = null!;
+    public string Shipflight { get; set; }
 
-    public string Code { get; set; } = null!;
+    public string Code { get; set; }
 
     public virtual ICollection<FlightsTicket> FlightsTickets { get; } = new List<FlightsTicket>();
 
-    public virtual AirsCompany IdAirCompanyNavigation { get; set; } = null!;
+    public virtual AirsCompany IdAirCompanyNavigation { get; set; }
 }

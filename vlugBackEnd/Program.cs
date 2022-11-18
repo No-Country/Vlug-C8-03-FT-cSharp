@@ -6,7 +6,3 @@ WebApplication app = builder.Build();
 starup.Configure(app, app.Environment);
 app.Run();
 
-
-
-
-//

@@ -1,32 +1,31 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using vlugBackEnd.Entity;
 using vlugBackEnd.Models;
 
 namespace vlugBackEnd.Controllers
 {
     [ApiController]
-    [Route("api/V1/[controller]")]
+    [Route("api/v1/[controller]")]
     public class UsersController : ControllerBase
     {
-        private readonly VlugDbContext dbContext;
+        private readonly VlugDbContext DB;
 
-        public UsersController(VlugDbContext dbContext)
+        public UsersController(VlugDbContext DB)
         {
-            this.dbContext = dbContext;
+            this.DB = DB;
         }     
 
 
 
-        [HttpGet("list")]
-        public async Task<ActionResult<List<User>>> GetList()
-        {
-            List<User> listUsers = await dbContext.Users.ToListAsync();
-            if (listUsers == null) return NotFound();
-            return Ok(listUsers);
+        //[HttpGet()]
+        //public async Task<ActionResult<List<User>>> GetList()
+        //{
+        //    List<User> listUsers = await dbContext.Users.ToListAsync();
+        //    if (listUsers == null) return NotFound();
+        //    return Ok(listUsers);
 
-        }
+        //}
 
 
 

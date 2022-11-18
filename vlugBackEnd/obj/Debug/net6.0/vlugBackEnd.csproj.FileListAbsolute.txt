@@ -283,3 +283,4 @@ E:\GitHUB\vlug\vlugBackEnd\obj\Debug\net6.0\vlugBackEnd.genruntimeconfig.cache
 E:\GitHUB\vlug\vlugBackEnd\obj\Debug\net6.0\ref\vlugBackEnd.dll
 E:\GitHUB\vlug\vlugBackEnd\bin\Debug\net6.0\AutoMapper.dll
 E:\GitHUB\vlug\vlugBackEnd\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+E:\GitHUB\vlug\vlugBackEnd\bin\Debug\net6.0\vlugBackEnd.staticwebassets.runtime.json
