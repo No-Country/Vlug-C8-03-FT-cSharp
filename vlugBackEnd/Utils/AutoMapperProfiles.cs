@@ -8,11 +8,8 @@ namespace vlugBackEnd.Utils
     {
         public AutoMapperProfiles()
         {
-            CreateMap<AirPortCityCountryCode, AirportCityModel>().ReverseMap();
+            CreateMap<AirPortCityCountryCode, AirPortCityModel>().ReverseMap();
             CreateMap<AirsCompany, AirCompanyModel>().ReverseMap();
-
-
-
         }
     }
 }

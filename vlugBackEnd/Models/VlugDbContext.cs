@@ -31,6 +31,9 @@ public partial class VlugDbContext : DbContext
 
     public virtual DbSet<UsersProfile> UsersProfiles { get; set; }
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder.UseSqlServer("Server=bdevelopment.net;Database=VlugDB;User=vluguser;Password=dd87c26e-d154-4c8c-b91a-74e25a388122;TrustServerCertificate=True");
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<AirPortCityCountryCode>(entity =>

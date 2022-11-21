@@ -1,6 +1,6 @@
 ﻿namespace vlugBackEnd.ModelsDTOs
 {
-    public class AirportCityModel
+    public class AirPortCityModel
     {
         public int Id { get; set; }
         public string City { get; set; }
