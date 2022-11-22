@@ -1,4 +1,6 @@
 import React from "react";
+import { LogInButton } from "../LogInButton";
+import { Icon } from '@iconify/react';
 
 export const Navbar = () => {
   return (
@@ -16,8 +18,11 @@ export const Navbar = () => {
             <a href="#"> Profile </a>
           </li>
         </ul>
-        <div className="w-full text-center">Profile widget</div>
       </div>
+      <LogInButton>
+        <Icon icon="ph:user-circle-duotone" color="#8c52ff" width="32"/>
+        <span>Iniciar sesión</span>
+      </LogInButton>
     </nav>
   );
 };
