@@ -1,29 +1,31 @@
 import React, { useState } from 'react'
 import JASONDATA from '../assets/airportscities.json';
-import { CheckBox } from "./Flights/styled";
 import { Button } from "./Button";
 import { DropdownInput } from "./DropdownInput";
-import { Formulario, GrupoInput, Input, Label } from "./Formulario";
+import { Formulario, GrupoInput, Input, Label, CheckBox } from "./Formulario";
 import SearchComponent from "./SearchComponent"
 
 const Reserva = () => {
   const [datos] = useState(JASONDATA)
+  const [valido, setValido] = useState({ 'round-trip': false, 'going': false })
 
   const validateCheck = (e) => {
     const id = e.target.id;
     const roundTripInput = document.getElementById("round_trip");
     const goingInput = document.getElementById("going");
     const returnTripInput = document.getElementById("return_date");
-    returnTripInput.setAttribute('class', 'inline')
 
-    if (id === "going") {
+    if (roundTripInput.checked == false && goingInput.checked == false) {
+      setValido({ 'round-trip': false, 'going': false })
+    } else if (id === "going") {
       roundTripInput.checked = false;
-      returnTripInput.setAttribute('class', 'hidden')
+      returnTripInput.disabled = true
+      setValido({ 'round-trip': false, 'going': true })
     } else if (id === "round_trip") {
       goingInput.checked = false;
-      if (returnTripInput.classList.value !== 'block') {
-        returnTripInput.setAttribute('class', 'inline')
-      }
+      returnTripInput.disabled = false
+      setValido({ 'round-trip': true, 'going': true })
+
     }
   };
 
@@ -52,34 +54,36 @@ const Reserva = () => {
     <Formulario>
       <SearchComponent
         label="Desde"
-        htmlFor="desde"
+        htmlFor="from"
         tipo="text"
-        id="desde"
+        id="from"
         place="Cali, CLO - Col"
         datos={datos} />
 
       <SearchComponent
         label="Hasta"
-        htmlFor="hasta"
+        htmlFor="to"
         tipo="text"
-        id="hasta"
+        id="to"
         place="Buenos Aires, BUE - Arg"
         datos={datos} />
 
-      <GrupoInput>
+      <GrupoInput style={{ opacity: !valido.going ? '.3' : '1' }}>
         <Label htmlFor='salida'>Salida</Label>
         <Input
           htmlFor="salida"
           type="date"
-          id="salida" />
+          disabled={!valido.going}
+          id="departure_date" />
       </GrupoInput>
-      
-      <GrupoInput>
+
+      <GrupoInput style={{ opacity: !valido['round-trip'] ? '.3' : '1' }}>
         <Label htmlFor='regreso'>Regreso</Label>
         <Input
           htmlFor="regreso"
           type="date"
-          id="regreso" />
+          disabled={!valido['round-trip']}
+          id="return_date" />
       </GrupoInput>
 
       <GrupoInput>
