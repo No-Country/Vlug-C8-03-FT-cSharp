@@ -1,9 +1,7 @@
 import { useState } from "react";
 import styled, { css } from "styled-components";
-import Reserva from "../Reserva"
 
-export default function TabGroup({tabs, children}) {
-  const [active, setActive] = useState(tabs[0]);
+export default function TabGroup({tabs, active, setActive, children}) {
   return (
     <>
       <ButtonGroup>
@@ -17,7 +15,7 @@ export default function TabGroup({tabs, children}) {
         ))}
       </ButtonGroup>
       <div style={{padding: "2em"}}>
-        {active === 'Reserva' && <Reserva/>}
+        {children}
       </div>
     </>
   );
