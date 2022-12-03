@@ -1,7 +1,8 @@
 import styled, { css } from "styled-components";
 
-const colors = {
-  error: "#bb2929"
+const colores = {
+  error: "#bb2929",
+  exito: "#1ed12d"
 }
 
 export const Formulario = styled.form`
@@ -32,6 +33,8 @@ export const Label = styled.label`
 `;
 export const Input = styled.input`
   width: 100%;
+  font-size: 1em;
+  font-weight: 500;
   background: #fff;
   border-radius: 12px;
   height: 45px;
@@ -51,6 +54,47 @@ export const Input = styled.input`
   ${props => props.valido === 'false' && css`
     border: 3px solid #cfcfd1;
   `}
+`;
+
+export const LeyendaError = styled.p`
+  font-size: 14px;
+  margin-bottom: 0;
+  margin-top: 10px;
+  color: ${colores.error};
+  display: none;
+
+  ${props => props.valido === 'true' && css`
+    display: none;
+  `}
+  ${props => props.valido === 'false' && css`
+    display: block;
+  `}
+`;
+
+export const Mensaje = styled.div`
+  height: 45px;
+  line-height: 45px;
+  padding: 0px 15px;
+  border-radius: 3px;
+  grid-column: span 2;
+  color: white;
+  font-weight: 500;
+  p {
+    margin: 0;
+  } 
+  b {
+    margin-left: 10px;
+  }
+  ${props => props.tipo === 'exito' && css`
+    background: ${colores.exito};
+  `}
+  ${props => props.tipo === 'error' && css`
+    background: ${colores.error};
+  `}
+  @media (max-width: 600px){
+    height: 90px;
+    grid-column: span 1;
+  }
 `;
 
 export const CheckBox = styled.div`

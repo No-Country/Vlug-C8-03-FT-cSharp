@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 
 export const LogInButton = styled.button`
+  background-color: transparent;
   align-items: center;
   border: 3px solid #8c52ff;
   border-radius: 12px;

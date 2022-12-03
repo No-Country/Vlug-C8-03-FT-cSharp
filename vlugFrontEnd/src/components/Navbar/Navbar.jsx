@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import { LogInButton } from "../LogInButton";
 import { NavBarStyled, Logo, Menu } from "./NavBarStyled";
 import { Icon } from '@iconify/react';
@@ -7,25 +8,30 @@ export const Navbar = () => {
   return (<>
     <NavBarStyled>
       <Logo>
-        <a to="/">VLUG</a>
+        <NavLink to="/"
+          className={({ isActive }) => isActive ? 'link-active' : ''}>VLUG</NavLink>
       </Logo>
       <Menu>
         <li>
-          <a to="/ofertas">Ofertas</a>
+          <NavLink to="/ofertas"
+            className={({ isActive }) => isActive ? 'link-active' : ''}>Ofertas</NavLink>
         </li>
         <li>
-          <a to="/estado-de-vuelo">Estado del vuelo</a>
+          <NavLink to="/estado-de-vuelo"
+            className={({ isActive }) => isActive ? 'link-active' : ''}>Estado del vuelo</NavLink>
         </li>
         <li>
-          <a to="/about">About</a>
+          <NavLink to="/about"
+            className={({ isActive }) => isActive ? 'link-active' : ''}>About</NavLink>
         </li>
       </Menu>
-      <a to="/signin">
+      <NavLink to="/signin"
+        className={({ isActive }) => isActive ? 'link-active' : ''}>
         <LogInButton>
           <Icon icon="ph:user-circle-duotone" color="#8c52ff" width="32" />
           <span>Iniciar sesión</span>
         </LogInButton>
-      </a>
+      </NavLink>
     </NavBarStyled>
   </>
   );

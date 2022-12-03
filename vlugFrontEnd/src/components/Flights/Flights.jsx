@@ -1,22 +1,36 @@
-import React, { useState } from "react";
+import { useState, useEffect, Suspense, lazy } from "react";
 import { data } from "browserslist";
 import TabGroup from "./Tabs";
 import { ReserveBox } from "./styled";
-import Reserva from "../Reserva"
-import AdministrarVuelo from "../AdministrarVuelo";
-import EstadoVuelo from "../EstadoVuelo";
+import Loader from "../Loader";
 
-const types = ['Reserva', 'Administrar vuelo', 'Estado de vuelo'];
+const Reserva = lazy(() => import('../Reserva'))
+const AdministrarVuelo = lazy(() => import('../AdministrarVuelo'))
+const EstadoVuelo = lazy(() => import('../EstadoVuelo'))
+
+const tabs = ['Reserva', 'Administrar vuelo', 'Estado de vuelo'];
 
 const Flights = () => {
-  const [active, setActive] = useState(types[0]);
+  const [active, setActive] = useState(tabs[0]);
 
   return (<>
     <ReserveBox>
-      <TabGroup tabs={types} active={active} setActive={setActive}>
-        {active === 'Reserva' && <Reserva />}
-        {active === 'Administrar vuelo' && <AdministrarVuelo />}
-        {active === 'Estado de vuelo' && <EstadoVuelo />}
+      <TabGroup tabs={tabs} active={active} setActive={setActive}>
+        {active === 'Reserva' &&
+          <Suspense fallback={<Loader />}>
+            <Reserva />
+          </Suspense>
+        }
+        {active === 'Administrar vuelo' &&
+          <Suspense fallback={<Loader />}>
+            <AdministrarVuelo />
+          </Suspense>
+        }
+        {active === 'Estado de vuelo' &&
+          <Suspense fallback={<Loader />}>
+            <EstadoVuelo />
+          </Suspense>
+        }
       </TabGroup>
     </ReserveBox>
   </>
