@@ -1,7 +1,7 @@
 import { useState, useEffect, Suspense, lazy } from "react";
 import { data } from "browserslist";
 import TabGroup from "./Tabs";
-import { ReserveBox } from "./styled";
+import { ReserveBox, Title } from "./styled";
 import Loader from "../Loader";
 
 const Reserva = lazy(() => import('../Reserva'))
@@ -14,6 +14,9 @@ const Flights = () => {
   const [active, setActive] = useState(tabs[0]);
 
   return (<>
+    <Title>
+      <h1>Reserva vuelos rápido y fácil</h1>
+    </Title>
     <ReserveBox>
       <TabGroup tabs={tabs} active={active} setActive={setActive}>
         {active === 'Reserva' &&

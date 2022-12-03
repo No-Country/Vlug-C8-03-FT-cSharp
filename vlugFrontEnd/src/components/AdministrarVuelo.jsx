@@ -1,4 +1,3 @@
-import React from 'react'
 import { GrupoInput, Input, Label } from './Formulario'
 
 const AdministrarVuelo = () => {
