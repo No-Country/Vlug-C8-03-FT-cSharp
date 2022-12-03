@@ -3,21 +3,16 @@ import styled, { css } from "styled-components";
 import { Label, Input, GrupoInput } from "./Formulario";
 
 export default function SearchComponente({ tipo, label, place, name, datos }) {
-  // const [value, setValue] = useState("")
   const [results, setResults] = useState([])
   const [searchFlight, setSearchFlight] = useState("")
   const [showResults, setShowResults] = useState(false)
-  const [dateFlight, setDateFlight] = useState()
-  const [passengers, setPassengers] = useState()
-// console.log(searchFlight)
+
   const inputEl = useRef("")
 
   const getSearch = () => {
     searchHandler(inputEl.current.value)
-    // console.log(dateFlight)
   }
   const searchHandler = (searchFlight) => {
-    // console.log(searchFlight)
     setSearchFlight(searchFlight)
     if (searchFlight !== "") {
       const newFlightList = datos.filter((flight) => {
@@ -25,9 +20,10 @@ export default function SearchComponente({ tipo, label, place, name, datos }) {
           .join(" ")
           .toLowerCase()
           .includes(searchFlight.toLowerCase())
-      })
+      }).slice(0, 10)
       setResults([...newFlightList])
-      // console.log(results)
+    } else if (searchFlight == ""){
+      setResults([])
     }
   }
   return <div>
@@ -43,7 +39,6 @@ export default function SearchComponente({ tipo, label, place, name, datos }) {
         onBlur={() => setShowResults(true)}
         onFocus={() => setShowResults(false)} />
     </GrupoInput>
-    {console.log("results ",results.length)}
     {results.length > 0  && (
       <RenderFlights flights={results} show={showResults} setValue={setSearchFlight}/>
     ) }
@@ -53,7 +48,6 @@ export default function SearchComponente({ tipo, label, place, name, datos }) {
 function RenderFlights({ flights, show, setValue }) {
   return (
     <Dropdown style={{display: show && 'none'}}>
-      {console.log("flihts ",flights.length)}
       {flights && flights.map((flight) => {
         return <p onMouseDown={()=>setValue(flight.city)} key={flight.id}>{flight.city} - {flight.country}</p>
       })}
