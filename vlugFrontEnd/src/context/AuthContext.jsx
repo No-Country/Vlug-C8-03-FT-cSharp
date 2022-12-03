@@ -39,9 +39,6 @@ export function AuthProvider({ children }) {
   const signin = async (email, password) => {
     try {
       await signInWithEmailAndPassword(auth, email, password)
-        .then((response) => {
-          // console.log(response)
-        })
     } catch (err) {
       console.log(err)
     }
@@ -49,9 +46,7 @@ export function AuthProvider({ children }) {
 
   const signout = async () => {
     try {
-      return auth.signOut().then((response) => {
-        // console.log(response)
-      })
+      return auth.signOut()
     } catch (err) {
       console.log(err)
     }

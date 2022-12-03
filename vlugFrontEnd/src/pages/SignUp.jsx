@@ -1,59 +1,84 @@
-import { useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { GrupoInput, Label, Input, Mensaje } from '../components/Formulario'
 import { Button } from '../components/Button'
+import { useAuth } from '../hooks/useAuth.js'
 
 const SignUp = () => {
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const { signup, currentUser } = useAuth()
 
   const userRef = useRef()
   const emailRef = useRef()
   const passwordRef = useRef()
   const passConfirmRef = useRef()
 
-  function handleSubmit(e) {
+  useEffect(() => {
+    setTimeout(() => {
+      if (!currentUser) {
+        setLoading(true)
+      }
+    }, 500)
+  }, [])
+
+  async function handleSubmit(e) {
     e.preventDefault()
+
+    const userName = userRef.current.value
+    const email = emailRef.current.value
+    const password = passwordRef.current.value
+    const passConfirm = passConfirmRef.current.value
+
+    if (password !== passConfirm) {
+      return setError('Passwords do not match')
+    }
+    if (password.length < 6) {
+      return setError('Password should be at least 6 characters')
+    }
+    try {
+      setError('')
+      await signup(userName, email, password)
+      setLoading(true)
+      setSuccess(true)
+    } catch (err) {
+      console.log(err)
+      setError('Fail to create an account')
+    }
+    setLoading(false)
   }
 
   return (
 
-      <SignUpForm onSubmit={handleSubmit}>
-        <h1>Registrate</h1>
-        <GrupoInput>
-          <Label>Nombre de usuario:</Label>
-          <Input type='text' ref={userRef}></Input>
-        </GrupoInput>
+    <SignUpForm onSubmit={handleSubmit} hidden={!loading}>
+      <h1>Registrate</h1>
+      <GrupoInput>
+        <Label>Nombre de usuario:</Label>
+        <Input type='text' ref={userRef}></Input>
+      </GrupoInput>
 
-        <GrupoInput>
-          <Label>E-mail:</Label>
-          <Input type='text' ref={emailRef}></Input>
-        </GrupoInput>
+      <GrupoInput>
+        <Label>E-mail:</Label>
+        <Input type='text' ref={emailRef}></Input>
+      </GrupoInput>
 
-        <GrupoInput>
-          <Label>Contraseña:</Label>
-          <Input type='password' ref={passwordRef}></Input>
-        </GrupoInput>
+      <GrupoInput>
+        <Label>Contraseña:</Label>
+        <Input type='password' ref={passwordRef}></Input>
+      </GrupoInput>
 
-        <GrupoInput>
-          <Label>Confirme contraseña:</Label>
-          <Input type='password' ref={passConfirmRef}></Input>
-        </GrupoInput>
+      <GrupoInput>
+        <Label>Confirme contraseña:</Label>
+        <Input type='password' ref={passConfirmRef}></Input>
+      </GrupoInput>
 
-        <Button type="submit">
-          Registrase
-        </Button>
+      <Button type="submit">
+        Registrase
+      </Button>
 
-        {error && <Mensaje tipo={'error'}>{error}</Mensaje>}
-        {success && <>
-          <Mensaje tipo={'exito'}>Cuenta registrada existosamente</Mensaje>
-          <Link to="/profile">
-            Ir a perfil →
-          </Link>
-        </>}
-      </SignUpForm>
+      {error && <Mensaje tipo={'error'}>{error}</Mensaje>}
+    </SignUpForm>
   )
 }
 

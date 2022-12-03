@@ -1,9 +1,11 @@
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 import { LogInButton } from "../LogInButton";
 import { NavBarStyled, Logo, Menu } from "./NavBarStyled";
 import { Icon } from '@iconify/react';
 
 export const Navbar = () => {
+  const { currentUser } = useAuth()
 
   return (<>
     <NavBarStyled>
@@ -25,11 +27,11 @@ export const Navbar = () => {
             className={({ isActive }) => isActive ? 'link-active' : ''}>About</NavLink>
         </li>
       </Menu>
-      <NavLink to="/signin"
+      <NavLink to={currentUser ? "/profile" : "/signin"}
         className={({ isActive }) => isActive ? 'link-active' : ''}>
         <LogInButton>
           <Icon icon="ph:user-circle-duotone" color="#8c52ff" width="32" />
-          <span>Iniciar sesión</span>
+          <span>{currentUser?.displayName || 'Iniciar sesión'}</span>
         </LogInButton>
       </NavLink>
     </NavBarStyled>

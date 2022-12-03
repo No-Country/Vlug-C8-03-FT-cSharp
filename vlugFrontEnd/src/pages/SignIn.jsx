@@ -1,26 +1,40 @@
-import { useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react'
+import { Link, Navigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { Button } from '../components/Button'
 import { GrupoInput, Label, Input, Mensaje } from '../components/Formulario'
+import { useAuth } from '../hooks/useAuth.js'
 
 const SignIn = () => {
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const { signin, currentUser } = useAuth()
 
   const emailRef = useRef()
   const passwordRef = useRef()
-  
-  function handleSubmit(e) {
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (!currentUser) {
+        setLoading(true)
+      }
+    }, 500)
+  }, [])
+
+  async function handleSubmit(e) {
     e.preventDefault()
-    console.log(emailRef.current.value)
-    console.log(passwordRef.current.value)
+    try {
+      await signin(emailRef.current.value, passwordRef.current.value)
+    } catch (err) {
+      console.log(err)
+      setError('Error')
+    }
   }
 
   return (
     <>
-      <SignInForm onSubmit={handleSubmit}>
+      <SignInForm onSubmit={handleSubmit} hidden={!loading}>
         <h1>Inicie sesión</h1>
         <GrupoInput>
           <Label>E-mail:</Label>
